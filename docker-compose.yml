@@ -3,18 +3,19 @@ services:
     build: ./server
     container_name: backend
     restart: always
-    env_file: 
-     - ./server/.env
-    ports: 
-     - "5000:5000"
+    env_file:
+      - ./server/.env
+    ports:
+      - "5000:5000"
 
   frontend:
-   build: ./client
-   container_name: frontend
-   restart: always
-   env_file:
-    - ./client/.env
-   ports:
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://13.51.177.80:5000/api
+    container_name: frontend
+    restart: always
+    ports:
     - "5173:5173"
-   depends_on:
+    depends_on:
     - backend
